@@ -8,7 +8,7 @@ export class LambdaStack extends cdk.Stack {
 
     new lambda.Function(this, 'Lambda', {
       code: lambda.Code.fromAsset('../typescript-lambda-backend/lambda-function/src'),
-      handler: 'index.handler',
+      handler: 'app.handler',
       runtime: lambda.Runtime.NODEJS_18_X,
     });
   }
