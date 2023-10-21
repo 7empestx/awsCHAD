@@ -1,12 +1,15 @@
 # **awsChad**
 
-## **Chad**: 
+## **Chad**:
+
 So you want to harness the power of the ultimate "alpha male" in the AWS realm? Enter awsChad—a kickstart repo so ripped, it scoffs at the mere mention of average stacks.
 
 ## **Frontend**:
 
-**HTMX:** Because React? That's what non-Chads use. HTMX pumps up your frontend game straight from AWS S3's gym and shows off its chiseled abs with AWS Cloudfront's lightning speed.
+**React with Webpack:** Forget those basic HTML templates. Real Chads craft their frontends using React and bundle their masterpieces with Webpack. Hosted straight from AWS S3's iron-clad gym and distributed with AWS Cloudfront's lightning-fast reflexes, this stack is the key to unlocking your frontend beast mode.
 
 ## **Backend**:
 
-**Rust AWS Lambda:** Python? Pffft. Only Rust has the muscle for true Chads in the AWS Lambda dojo. Our API gateway's so flexed, it triggers Rust functions like a Chad spotting another free bench at the gym.
+**TypeScript AWS Lambda:** Python and JavaScript? Too mainstream. Real Chads know that TypeScript brings the type safety and modern syntax that separates the men from the boys in the AWS Lambda dojo. Our API Gateway is so sharp, it triggers TypeScript functions like a Chad spotting the last protein shake on the shelf.
+
+----------
