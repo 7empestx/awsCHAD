@@ -7,7 +7,7 @@ export class LambdaStack extends cdk.Stack {
     super(scope, id, props);
 
     new lambda.Function(this, 'Lambda', {
-      code: lambda.Code.fromInline('export.handler = function(event, context, callback) { callback(null, { statusCode: 200, body: "Hello World" }); }'),
+      code: lambda.Code.fromAsset('../typescript-lambda-backend/lambda-function/src'),
       handler: 'index.handler',
       runtime: lambda.Runtime.NODEJS_18_X,
     });
