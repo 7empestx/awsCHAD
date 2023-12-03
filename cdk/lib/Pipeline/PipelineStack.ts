@@ -7,17 +7,18 @@ export class PipelineStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    const repository = Repository.fromRepositoryName(this, 'MyRepository', 'awsChad');
+    const repository = Repository.fromRepositoryName(this, 'awsChad', 'awsChad');
 
     const pipeline = new CodePipeline(this, 'Pipeline', {
-      pipelineName: 'ReactAppPipeline',
+      pipelineName: 'awsChad',
       synth: new ShellStep('Synth', {
         input: CodePipelineSource.codeCommit(repository, 'main'), 
         commands: [
           'cd cdk',
           'npm ci',
           'npm run build',
-          'npx cdk synth'
+          'cdk synth',
+          'cdk deploy --all'
         ]
       })
     });
