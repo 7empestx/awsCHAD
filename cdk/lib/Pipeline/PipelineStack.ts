@@ -14,10 +14,10 @@ export class PipelineStack extends cdk.Stack {
       synth: new ShellStep('Synth', {
         input: CodePipelineSource.codeCommit(repository, 'main'), 
         commands: [
-          'cd react-frontend',
+          'cd cdk',
           'npm ci',
           'npm run build',
-          'cd ..',
+          'npx cdk synth'
         ]
       })
     });
