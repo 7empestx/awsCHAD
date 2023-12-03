@@ -17,6 +17,7 @@ export class PipelineStack extends cdk.Stack {
           'cd react-frontend',
           'npm ci',
           'npm run build',
+          'cd ..',
         ]
       })
     });
