@@ -14,11 +14,11 @@ export class PipelineStack extends cdk.Stack {
       synth: new ShellStep('Synth', {
         input: CodePipelineSource.codeCommit(repository, 'main'), 
         commands: [
+          'npm install -g aws-cdk',
           'cd cdk',
           'npm ci',
           'npm run build',
           'cdk synth',
-          'cdk deploy --all'
         ]
       })
     });
