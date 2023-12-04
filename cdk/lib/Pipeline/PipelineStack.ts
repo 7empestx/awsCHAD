@@ -24,10 +24,9 @@ export class PipelineStack extends cdk.Stack {
         primaryOutputDirectory: 'cdk/cdk.out',
       })
     });
-    /*
+     
     pipeline.addStage(new PipelineStage(this, "Alpha", {
       env: { account: "659946347679", region: "us-west-2" }
     }));
-    */
   }
 }
