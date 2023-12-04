@@ -10,3 +10,4 @@ new PipelineStack(app, 'PipelineStack', {
   },
 });
 
+app.synth();
