@@ -20,10 +20,6 @@ export class CognitoStack extends cdk.Stack {
           required: true,
           mutable: true
         },
-        phoneNumber: {
-          required: true,
-          mutable: true
-        }
       },
       passwordPolicy: {
         minLength: 8,
