@@ -19,10 +19,6 @@ export class CognitoStack extends cdk.Stack {
         email: {
           required: true,
           mutable: true
-        },
-        phoneNumber: {
-          required: true,
-          mutable: true
         }
       },
       passwordPolicy: {
