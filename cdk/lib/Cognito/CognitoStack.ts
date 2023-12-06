@@ -21,7 +21,7 @@ export class CognitoStack extends cdk.Stack {
           mutable: true
         },
         phoneNumber: {
-          required: false,
+          required: true,
           mutable: true
         }
       },
