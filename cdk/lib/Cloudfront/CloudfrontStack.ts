@@ -22,6 +22,7 @@ export class CloudfrontStack extends cdk.Stack {
     const siteCertificate = new acm.DnsValidatedCertificate(this, 'SiteCertificate', {
       domainName: 'intellismiledental.com',
       hostedZone: hostedZone,
+      region: 'us-east-1',
     });
 
     this.distribution = new cloudfront.CloudFrontWebDistribution(this, 'CloudFront', {
