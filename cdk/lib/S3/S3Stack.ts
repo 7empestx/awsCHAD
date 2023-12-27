@@ -10,18 +10,17 @@ export class S3Stack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    this.myBucket = new s3.Bucket(this, "S3StackBucket", {
+    this.myBucket = new s3.Bucket(this, "IntelliSmileDentalBucket", {
+      bucketName: "IntelliSmileDentalBucket",
       versioned: true,
       websiteIndexDocument: "index.html",
       publicReadAccess: true,
       removalPolicy: cdk.RemovalPolicy.DESTROY
     });
 
-    /*
     new deploy.BucketDeployment(this, "DeployWebsite", {
       destinationBucket: this.myBucket,
       sources: [deploy.Source.asset("../react-frontend/public")],
     });
-    */
   }
 }
