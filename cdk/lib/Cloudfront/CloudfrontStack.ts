@@ -15,7 +15,12 @@ export class CloudfrontStack extends cdk.Stack {
 
     this.distribution = new cloudfront.CloudFrontWebDistribution(this, "CloudFront", {
       originConfigs: [
-
+        {
+          s3OriginSource: {
+            s3BucketSource: bucket,
+          },
+          behaviors: [{ isDefaultBehavior: true }],
+        },
       ]
     });
   }
