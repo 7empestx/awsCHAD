@@ -11,8 +11,7 @@ export class S3Stack extends cdk.Stack {
     super(scope, id, props);
 
     this.myBucket = new s3.Bucket(this, "IntelliSmileDentalBucket", {
-      bucketName: "IntelliSmileDentalBucket",
-      versioned: true,
+      bucketName: "intellismiledentalbucket", versioned: true,
       websiteIndexDocument: "index.html",
       publicReadAccess: true,
       removalPolicy: cdk.RemovalPolicy.DESTROY
