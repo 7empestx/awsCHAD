@@ -1,6 +1,8 @@
-import * as cdk from "aws-cdk-lib";
-import { Construct } from "constructs";
-import { aws_cloudfront as cloudfront, aws_s3 as s3 } from "aws-cdk-lib";
+import * as cdk from 'aws-cdk-lib';
+import { Construct } from 'constructs';
+import { aws_cloudfront as cloudfront, aws_s3 as s3 } from 'aws-cdk-lib';
+import * as acm from 'aws-cdk-lib/aws-certificatemanager';
+import * as route53 from 'aws-cdk-lib/aws-route53';
 
 export class CloudfrontStack extends cdk.Stack {
   public readonly distribution: cloudfront.CloudFrontWebDistribution;
@@ -13,7 +15,16 @@ export class CloudfrontStack extends cdk.Stack {
   ) {
     super(scope, id, props);
 
-    this.distribution = new cloudfront.CloudFrontWebDistribution(this, "CloudFront", {
+    const hostedZone = route53.HostedZone.fromLookup(this, 'HostedZone', {
+      domainName: 'intellismiledental.com',
+    });
+
+    const siteCertificate = new acm.DnsValidatedCertificate(this, 'SiteCertificate', {
+      domainName: 'intellismiledental.com',
+      hostedZone: hostedZone,
+    });
+
+    this.distribution = new cloudfront.CloudFrontWebDistribution(this, 'CloudFront', {
       originConfigs: [
         {
           s3OriginSource: {
@@ -21,7 +32,8 @@ export class CloudfrontStack extends cdk.Stack {
           },
           behaviors: [{ isDefaultBehavior: true }],
         },
-      ]
+      ],
+      viewerCertificate: cloudfront.ViewerCertificate.fromAcmCertificate(siteCertificate),
     });
   }
 }
