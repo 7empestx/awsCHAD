@@ -14,7 +14,8 @@ export class S3Stack extends cdk.Stack {
       bucketName: "intellismiledentalbucket",
       versioned: true,
       websiteIndexDocument: "index.html",
-      removalPolicy: cdk.RemovalPolicy.DESTROY
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      publicReadAccess: true,
     });
 
     new deploy.BucketDeployment(this, "DeployWebsite", {
