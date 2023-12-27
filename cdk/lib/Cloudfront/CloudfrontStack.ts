@@ -3,6 +3,8 @@ import { Construct } from "constructs";
 import { aws_cloudfront as cloudfront, aws_s3 as s3 } from "aws-cdk-lib";
 
 export class CloudfrontStack extends cdk.Stack {
+  public readonly distribution: cloudfront.CloudFrontWebDistribution;
+
   constructor(
     scope: Construct,
     id: string,
@@ -11,15 +13,10 @@ export class CloudfrontStack extends cdk.Stack {
   ) {
     super(scope, id, props);
 
-    new cloudfront.CloudFrontWebDistribution(this, "CloudFront", {
+    this.distribution = new cloudfront.CloudFrontWebDistribution(this, "CloudFront", {
       originConfigs: [
-        {
-          s3OriginSource: {
-            s3BucketSource: bucket,
-          },
-          behaviors: [{ isDefaultBehavior: true }],
-        },
-      ],
+
+      ]
     });
   }
 }
