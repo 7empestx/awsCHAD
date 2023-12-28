@@ -11,9 +11,10 @@ export class PipelineStage extends cdk.Stage {
 
     new FrontendStack(this, "FrontendStack");
 
+    /*
     new LambdaStack(this, "LambdaStack");
     new APIGatewayStack(this, "APIGatewayStack");
     new CognitoStack(this, "CognitoStack");
-
+    */
   }
 }
