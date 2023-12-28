@@ -36,6 +36,8 @@ export class S3Stack extends cdk.Stack {
     new deploy.BucketDeployment(this, "DeployWebsite", {
       destinationBucket: this.myBucket,
       sources: [deploy.Source.asset("../react-frontend/public")],
+      distribution: this.distribution,
+      distributionPaths: ["/*"],
     });
   }
 }
