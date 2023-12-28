@@ -13,15 +13,17 @@ export class Route53Stack extends cdk.Stack {
     super(scope, id, props);
 
     // Perform the lookup within the stack constructor
-    const hostedZone = route53.HostedZone.fromLookup(this, 'HostedZone', {
-      domainName: 'intellismiledental.com',
+    const hostedZone = route53.HostedZone.fromLookup(this, "HostedZone", {
+      domainName: "intellismiledental.com",
     });
 
     // Use the looked-up hosted zone for creating records
-    new route53.ARecord(this, 'AliasRecord', {
+    new route53.ARecord(this, "AliasRecord", {
       zone: hostedZone,
-      target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(props.distribution)),
-      recordName: 'intellismiledental.com',
+      target: route53.RecordTarget.fromAlias(
+        new targets.CloudFrontTarget(props.distribution),
+      ),
+      recordName: "intellismiledental.com",
     });
   }
 }

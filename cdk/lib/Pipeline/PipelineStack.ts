@@ -27,8 +27,10 @@ export class PipelineStack extends cdk.Stack {
       }),
     });
 
-    pipeline.addStage(new PipelineStage(this, "Alpha", {
-      env: { account: "659946347679", region: "us-west-2" }
-    }));
+    pipeline.addStage(
+      new PipelineStage(this, "Alpha", {
+        env: { account: "659946347679", region: "us-west-2" },
+      }),
+    );
   }
 }

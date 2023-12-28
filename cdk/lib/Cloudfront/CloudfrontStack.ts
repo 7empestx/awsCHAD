@@ -1,8 +1,8 @@
-import * as cdk from 'aws-cdk-lib';
-import { Construct } from 'constructs';
-import { aws_cloudfront as cloudfront, aws_s3 as s3 } from 'aws-cdk-lib';
-import * as acm from 'aws-cdk-lib/aws-certificatemanager';
-import * as route53 from 'aws-cdk-lib/aws-route53';
+import * as cdk from "aws-cdk-lib";
+import { Construct } from "constructs";
+import { aws_cloudfront as cloudfront, aws_s3 as s3 } from "aws-cdk-lib";
+import * as acm from "aws-cdk-lib/aws-certificatemanager";
+import * as route53 from "aws-cdk-lib/aws-route53";
 
 export class CloudfrontStack extends cdk.Stack {
   public readonly distribution: cloudfront.CloudFrontWebDistribution;
@@ -15,26 +15,35 @@ export class CloudfrontStack extends cdk.Stack {
   ) {
     super(scope, id, props);
 
-    const hostedZone = route53.HostedZone.fromLookup(this, 'HostedZone', {
-      domainName: 'intellismiledental.com',
+    const hostedZone = route53.HostedZone.fromLookup(this, "HostedZone", {
+      domainName: "intellismiledental.com",
     });
 
-    const siteCertificate = new acm.DnsValidatedCertificate(this, 'SiteCertificate', {
-      domainName: 'intellismiledental.com',
-      hostedZone: hostedZone,
-      region: 'us-east-1',
-    });
+    const siteCertificate = new acm.DnsValidatedCertificate(
+      this,
+      "SiteCertificate",
+      {
+        domainName: "intellismiledental.com",
+        hostedZone: hostedZone,
+        region: "us-east-1",
+      },
+    );
 
-    this.distribution = new cloudfront.CloudFrontWebDistribution(this, 'CloudFront', {
-      originConfigs: [
-        {
-          s3OriginSource: {
-            s3BucketSource: bucket,
+    this.distribution = new cloudfront.CloudFrontWebDistribution(
+      this,
+      "CloudFront",
+      {
+        originConfigs: [
+          {
+            behaviors: [{ isDefaultBehavior: true }],
+            customOriginSource: {
+              domainName: bucket.bucketWebsiteDomainName,
+            },
           },
-          behaviors: [{ isDefaultBehavior: true }],
-        },
-      ],
-      viewerCertificate: cloudfront.ViewerCertificate.fromAcmCertificate(siteCertificate),
-    });
+        ],
+        viewerCertificate:
+          cloudfront.ViewerCertificate.fromAcmCertificate(siteCertificate),
+      },
+    );
   }
 }
