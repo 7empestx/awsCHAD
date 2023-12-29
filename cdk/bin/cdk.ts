@@ -6,7 +6,7 @@ const app = new cdk.App();
 new PipelineStack(app, "PipelineStack", {
   env: {
     account: "659946347679",
-    region: "us-west-2",
+    region: "us-east-1",
   },
 });
 
