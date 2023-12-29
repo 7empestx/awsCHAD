@@ -1,20 +1,17 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
-import { APIGatewayStack } from "../APIGateway/APIGatewayStack";
-import { CognitoStack } from "../Cognito/CognitoStack";
-import { LambdaStack } from "../Lambda/LambdaStack";
 import { FrontendStack } from "../FrontendStack/FrontendStack";
+import { S3Stack } from "../S3/S3Stack";
 
 export class PipelineStage extends cdk.Stage {
   constructor(scope: Construct, id: string, props?: cdk.StageProps) {
     super(scope, id, props);
 
-    new FrontendStack(this, "FrontendStack");
+    const s3Stack = new S3Stack(this, "S3Stack");
 
-    /*
-    new LambdaStack(this, "LambdaStack");
-    new APIGatewayStack(this, "APIGatewayStack");
-    new CognitoStack(this, "CognitoStack");
-    */
+    new FrontendStack(this, "FrontendStack", {
+      myBucket: s3Stack.myBucket,
+      cloudfrontOAI: s3Stack.cloudfrontOAI,
+    });
   }
 }

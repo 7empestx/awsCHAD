@@ -2,41 +2,26 @@ import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import { aws_s3 as s3, aws_cloudfront as cloudfront, aws_route53 as route53, aws_route53_targets as targets } from "aws-cdk-lib";
 import * as deploy from "aws-cdk-lib/aws-s3-deployment";
-import { PolicyStatement, Effect, StarPrincipal } from "aws-cdk-lib/aws-iam";
 import * as acm from "aws-cdk-lib/aws-certificatemanager";
-import * as iam from 'aws-cdk-lib/aws-iam';
 import * as cloudfront_origins from 'aws-cdk-lib/aws-cloudfront-origins';
 
+interface FrontendStackProps extends cdk.StackProps {
+  myBucket: s3.Bucket;
+  cloudfrontOAI: cloudfront.OriginAccessIdentity;
+};
+
 export class FrontendStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
-    super(scope, id, props);
+  constructor(scope: Construct, id: string, props: FrontendStackProps) {
+    super(scope, id, {
+      env: { account: '659946347679', region: 'us-east-1' },
+      ...props
+    });
 
     // Create the ACM certificate
     const hostedZone = route53.HostedZone.fromLookup(this, "HostedZone", {
       domainName: "intellismiledental.com",
     });
     const siteDomain = "intellismiledental.com";
-    const cloudfrontOAI = new cloudfront.OriginAccessIdentity(this, 'cloudfront-OAI', {
-      comment: `OAI for ${siteDomain}`,
-    });
-
-    // Create the S3 bucket
-    const myBucket = new s3.Bucket(this, "IntelliSmileDentalBucket", {
-      bucketName: "intellismiledentalbucket",
-      versioned: true,
-      websiteIndexDocument: "index.html",
-      removalPolicy: cdk.RemovalPolicy.DESTROY,
-    });
-
-    // Add a bucket policy
-    myBucket.addToResourcePolicy(
-      new PolicyStatement({
-        actions: ["s3:GetObject"],
-        resources: [myBucket.arnForObjects("*")],
-        principals: [new iam.CanonicalUserPrincipal(cloudfrontOAI.cloudFrontOriginAccessIdentityS3CanonicalUserId)],
-      })
-    )
-
     const siteCertificate = new acm.Certificate(this, "SiteCertificate", {
       domainName: siteDomain,
       validation: acm.CertificateValidation.fromDns(hostedZone),
@@ -51,7 +36,7 @@ export class FrontendStack extends cdk.Stack {
       defaultRootObject: "index.html",
       domainNames: [siteDomain],
       minimumProtocolVersion: cloudfront.SecurityPolicyProtocol.TLS_V1_2_2021,
-      errorResponses:[
+      errorResponses: [
         {
           httpStatus: 403,
           responseHttpStatus: 403,
@@ -60,7 +45,7 @@ export class FrontendStack extends cdk.Stack {
         }
       ],
       defaultBehavior: {
-        origin: new cloudfront_origins.S3Origin(myBucket, {originAccessIdentity: cloudfrontOAI}),
+        origin: new cloudfront_origins.S3Origin(props.myBucket, { originAccessIdentity: props.cloudfrontOAI }),
         compress: true,
         allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
@@ -79,7 +64,7 @@ export class FrontendStack extends cdk.Stack {
     // Deploy website assets to the bucket
     new deploy.BucketDeployment(this, "DeployWebsite", {
       sources: [deploy.Source.asset("../react-frontend/public")],
-      destinationBucket: myBucket,
+      destinationBucket: props.myBucket,
       distribution,
       distributionPaths: ["/*"],
     });
