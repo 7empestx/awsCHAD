@@ -4,10 +4,21 @@ import { aws_s3 as s3, aws_cloudfront as cloudfront, aws_route53 as route53, aws
 import * as deploy from "aws-cdk-lib/aws-s3-deployment";
 import { PolicyStatement, Effect, StarPrincipal } from "aws-cdk-lib/aws-iam";
 import * as acm from "aws-cdk-lib/aws-certificatemanager";
+import * as iam from 'aws-cdk-lib/aws-iam';
+import * as cloudfront_origins from 'aws-cdk-lib/aws-cloudfront-origins';
 
 export class FrontendStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
+
+    // Create the ACM certificate
+    const hostedZone = route53.HostedZone.fromLookup(this, "HostedZone", {
+      domainName: "intellismiledental.com",
+    });
+    const siteDomain = "intellismiledental.com";
+    const cloudfrontOAI = new cloudfront.OriginAccessIdentity(this, 'cloudfront-OAI', {
+      comment: `OAI for ${siteDomain}`,
+    });
 
     // Create the S3 bucket
     const myBucket = new s3.Bucket(this, "IntelliSmileDentalBucket", {
@@ -15,42 +26,54 @@ export class FrontendStack extends cdk.Stack {
       versioned: true,
       websiteIndexDocument: "index.html",
       removalPolicy: cdk.RemovalPolicy.DESTROY,
-      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
     });
 
     // Add a bucket policy
     myBucket.addToResourcePolicy(
       new PolicyStatement({
         actions: ["s3:GetObject"],
-        effect: Effect.ALLOW,
-        principals: [new StarPrincipal()],
         resources: [myBucket.arnForObjects("*")],
-      }),
-    );
-
-    // Create the ACM certificate
-    const hostedZone = route53.HostedZone.fromLookup(this, "HostedZone", {
-      domainName: "intellismiledental.com",
-    });
+        principals: [new iam.CanonicalUserPrincipal(cloudfrontOAI.cloudFrontOriginAccessIdentityS3CanonicalUserId)],
+      })
+    )
 
     const siteCertificate = new acm.Certificate(this, "SiteCertificate", {
-      domainName: "intellismiledental.com",
+      domainName: siteDomain,
       validation: acm.CertificateValidation.fromDns(hostedZone),
     });
 
+    new cdk.CfnOutput(this, 'Certificate', { value: siteCertificate.certificateArn });
+
+
     // Create the CloudFront distribution
-    const distribution = new cloudfront.CloudFrontWebDistribution(this, "CloudFront", {
-      originConfigs: [
+    const distribution = new cloudfront.Distribution(this, "CloudFront", {
+      certificate: siteCertificate,
+      defaultRootObject: "index.html",
+      domainNames: [siteDomain],
+      minimumProtocolVersion: cloudfront.SecurityPolicyProtocol.TLS_V1_2_2021,
+      errorResponses:[
         {
-          s3OriginSource: {
-            s3BucketSource: myBucket,
-          },
-          behaviors: [{ isDefaultBehavior: true }],
-        },
+          httpStatus: 403,
+          responseHttpStatus: 403,
+          responsePagePath: '/error.html',
+          ttl: cdk.Duration.minutes(30),
+        }
       ],
-      viewerCertificate: cloudfront.ViewerCertificate.fromAcmCertificate(siteCertificate, {
-        aliases: ["intellismiledental.com"],
-      }),
+      defaultBehavior: {
+        origin: new cloudfront_origins.S3Origin(myBucket, {originAccessIdentity: cloudfrontOAI}),
+        compress: true,
+        allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
+        viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+      }
+    });
+
+    new cdk.CfnOutput(this, 'DistributionId', { value: distribution.distributionId });
+
+    // Create Route 53 record
+    new route53.ARecord(this, "AliasRecord", {
+      recordName: siteDomain,
+      target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(distribution)),
+      zone: hostedZone,
     });
 
     // Deploy website assets to the bucket
@@ -59,13 +82,6 @@ export class FrontendStack extends cdk.Stack {
       destinationBucket: myBucket,
       distribution,
       distributionPaths: ["/*"],
-    });
-
-    // Create Route 53 record
-    new route53.ARecord(this, "AliasRecord", {
-      zone: hostedZone,
-      target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(distribution)),
-      recordName: "intellismiledental.com",
     });
   }
 }
