@@ -33,10 +33,9 @@ export class FrontendStack extends cdk.Stack {
       domainName: "intellismiledental.com",
     });
 
-    const siteCertificate = new acm.DnsValidatedCertificate(this, "SiteCertificate", {
+    const siteCertificate = new acm.Certificate(this, "SiteCertificate", {
       domainName: "intellismiledental.com",
-      hostedZone: hostedZone,
-      region: "us-east-1",
+      validation: acm.CertificateValidation.fromDns(hostedZone),
     });
 
     // Create the CloudFront distribution
