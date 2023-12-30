@@ -1,3 +1,4 @@
+
 # **awsChad**
 
 ## **Chad**:
@@ -12,11 +13,16 @@ So you want to harness the power of the ultimate "alpha male" in the AWS realm? 
 
 **TypeScript AWS Lambda:** Python and JavaScript? Too mainstream. Real Chads know that TypeScript brings the type safety and modern syntax that separates the men from the boys in the AWS Lambda dojo. Our API Gateway is so sharp, it triggers TypeScript functions like a Chad spotting the last protein shake on the shelf.
 
-## Cloud Development Kit (CDK) Instructions:
+## Guide to Using AWS CDK:
 
-**For successful operations with the CDK, you must perform two main commands provided your AWS credentials and IAM policies are configured accurately.**
+**Before proceeding with AWS CDK operations, ensure your AWS credentials and IAM policies are properly configured.**
 
-1. Initiate a bootstrap process using the command `cdk bootstrap`. This action prepares your AWS environment for the deployment of the resources defined in your CDK application.
-   
-2. After bootstrapping, execute `cdk deploy --all` to deploy all the stacks in your CDK application to your AWS account. Ensure that your AWS credentials are in place and that the IAM policies grant the necessary permissions for the resources being deployed.
-----------
+1. **Bootstrap Your AWS Environment**:
+   Begin by initializing a bootstrap process. Use the command `cdk bootstrap` to prepare your AWS environment. This step sets up the necessary resources in AWS to support the deployment of your CDK application.
+
+2. **Deploy Your Application**:
+   Once bootstrapping is complete, deploy your CDK stacks to your AWS account with the command `cdk deploy --all`. Confirm that your AWS credentials are correctly configured and that your IAM policies provide the required permissions for deploying the resources.
+
+---
+
+Occasionally, you might need to synthesize your stack, especially after making code modifications. Given that this CDK project requires specific command-line arguments for its configuration, the synthesis command should be formatted as follows: `cdk synth -c accountId=123456789012 -c region=us-east-1 -c domainName=google.com`. Please note that this package may function exclusively in the `us-east-1` region due to the placement of the domain's ACM certificate in that particular region.

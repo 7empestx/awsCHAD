@@ -29,7 +29,10 @@ export class PipelineStack extends cdk.Stack {
 
     pipeline.addStage(
       new PipelineStage(this, "Alpha", {
-        env: { account: "659946347679", region: "us-east-1" },
+        env: {
+          account: this.account,
+          region: this.region,
+        },
       }),
     );
   }

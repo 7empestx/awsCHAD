@@ -3,10 +3,17 @@ import { PipelineStack } from "../lib/Pipeline/PipelineStack";
 
 const app = new cdk.App();
 
+const accountId = app.node.tryGetContext("accountId");
+const region = app.node.tryGetContext("region");
+
+if (!accountId || !region) {
+  throw new Error("Account ID and Region must be specified in the context.");
+}
+
 new PipelineStack(app, "PipelineStack", {
   env: {
-    account: "659946347679",
-    region: "us-east-1",
+    account: accountId,
+    region: region,
   },
 });
 
