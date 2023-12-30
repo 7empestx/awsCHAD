@@ -1,1 +1,3 @@
 react-frontend/.env
+cdk/.env
+cdk/cdk.context.json

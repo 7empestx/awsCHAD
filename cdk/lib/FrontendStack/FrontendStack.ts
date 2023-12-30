@@ -10,6 +10,8 @@ import * as deploy from "aws-cdk-lib/aws-s3-deployment";
 import * as acm from "aws-cdk-lib/aws-certificatemanager";
 import * as cloudfront_origins from "aws-cdk-lib/aws-cloudfront-origins";
 
+require('dotenv').config();
+
 interface FrontendStackProps extends cdk.StackProps {
   myBucket: s3.Bucket;
   cloudfrontOAI: cloudfront.OriginAccessIdentity;
@@ -20,7 +22,11 @@ export class FrontendStack extends cdk.Stack {
     super(scope, id, props);
 
     // Create the ACM certificate
-    const domainName = this.node.tryGetContext("domainName");
+    const domainName = process.env.DOMAIN_NAME;
+
+    if (!domainName) {
+      throw new Error("DOMAIN_NAME environment variable is required");
+    }
 
     const hostedZone = route53.HostedZone.fromLookup(this, "HostedZone", {
       domainName: domainName,
