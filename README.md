@@ -10,6 +10,8 @@ Looking to dominate the AWS landscape with the prowess of an "alpha"? Meet awsCh
 
 **TypeScript AWS Lambda**: Cast aside the common tongues of Python and JavaScript. The enlightened know that TypeScript's type safety and sleek syntax are the hallmarks of cloud function warriors in the AWS Lambda arena. With an API Gateway honed to a razor's edge, it beckons TypeScript Lambdas with the urgency of a Chad vying for the last gym bench on Monday.
 
+![awsChadArchitectureDiagram](images/awsChadArchitectureDiagram.png)
+
 ## Prerequisites:
 
 -   **Git**: Version control that packs a punch.
