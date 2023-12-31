@@ -61,6 +61,7 @@ This guide outlines the steps required for the seamless deployment of the awsCha
                     ]
                 },
                 {
+                    "Sid": "AWSPipelineSynth",
                     "Effect": "Allow",
                     "Action": "route53:ListHostedZonesByName",
                     "Resource": "*"
@@ -92,6 +93,14 @@ This guide outlines the steps required for the seamless deployment of the awsCha
 
     - In the `us-east-1` region, establish a CodeCommit repository named `awsChad`. Should you opt for a different name or region, realign your pipeline stack's configurations accordingly.
     - Link the CodeCommit repository as a remote to your local repository and push your awsChad project using the HTTPS Git credentials established earlier.
+
+    - Should you encounter any challenges with inputting your username and password for your CodeCommit repository, you have the option to reset your Git credentials. To do so, initiate the credential reset with the command `git credential reject`. After executing this command, enter the following details when prompted:
+      ```
+      protocol=https
+      host=git-codecommit.us-east-1.amazonaws.com
+      ```
+    This will effectively clear any cached credentials for your CodeCommit repository, allowing you to enter new authentication details on your next Git operation.
+
 
 6. **Bootstrapping and Deployment**:
 
