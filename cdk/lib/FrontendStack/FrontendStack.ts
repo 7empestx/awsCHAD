@@ -27,6 +27,7 @@ export class FrontendStack extends cdk.Stack {
     if (!domainName) {
       throw new Error("DOMAIN_NAME environment variable is required");
     }
+    console.log("domainName: ", domainName);
 
     const hostedZone = route53.HostedZone.fromLookup(this, "HostedZone", {
       domainName: domainName,
