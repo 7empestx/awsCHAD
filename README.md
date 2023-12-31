@@ -13,18 +13,21 @@ Looking to dominate the AWS landscape with the prowess of an "alpha"? Meet awsCh
 ## Prerequisites:
 - **Git**: Version control that packs a punch.
 - **npm**: Your trusty sidekick for managing packages.
+- **aws-cli**
 
 ## Getting Started:
 - **Fork**: Begin by forking this repository into your own GitHub domain.
 - **Clone**: Pull your forked repository into your local environment for development prowess.
 
+---
+
 ## awsChad Deployment Guide:
 
-To ensure a seamless deployment, please prepare the following prerequisites:
+This guide outlines the steps required for the seamless deployment of the awsChad project. Follow these prerequisites to prepare your environment:
 
 1. **IAM User Configuration**:
-   - Set up an IAM user and generate access keys for use with the AWS Command Line Interface (CLI).
-   - Assign a policy to this user with the following permissions:
+   - Create an IAM user and generate access keys for CLI operations.
+   - Attach the following policy to the user, ensuring to replace `<account-number>` with your actual AWS account number:
      ```json
      {
          "Version": "2012-10-17",
@@ -47,38 +50,39 @@ To ensure a seamless deployment, please prepare the following prerequisites:
                      "s3:*"
                  ],
                  "Resource": [
-                     "arn:aws:iam::301455343002:*",
-                     "arn:aws:cloudformation:us-east-1:301455343002:*",
-                     "arn:aws:ssm:us-east-1:301455343002:*",
-                     "arn:aws:ecr:us-east-1:301455343002:*",
+                     "arn:aws:iam::<account-number>:*",
+                     "arn:aws:cloudformation:us-east-1:<account-number>:*",
+                     "arn:aws:ssm:us-east-1:<account-number>:*",
+                     "arn:aws:ecr:us-east-1:<account-number>:*",
                      "arn:aws:s3:::*"
                  ]
              }
          ]
      }
      ```
-     This policy is designed to empower `cdk bootstrap` execution without permission roadblocks.
-     Caution: The listed policy is broad; refine it to fit your security model. Protect your access keys diligently and avoid exposing them in any public or private code repositories.
+     This policy facilitates the `cdk bootstrap` command. Exercise caution as this policy is expansive; tailor it to your project's security needs. Safeguard your access keys and never commit them to any repositories.
+   - Generate HTTPS Git credentials for AWS CodeCommit and attach the `AWSCodeCommitPowerUser` policy to your IAM user for repository access.
 
 2. **AWS CLI Installation**:
-   - Install the AWS CLI following the guide at [AWS CLI Installation](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html).
-   - Configure the CLI by executing `aws configure` and inputting your IAM user's credentials.
+   - Follow the [AWS CLI Installation](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html) documentation to install the AWS CLI.
+   - Run `aws configure` to set up your IAM user's credentials in the CLI environment.
 
 3. **Domain Registration**:
-   - Register and configure your domain in Amazon Route 53. Detailed instructions are available in the [Route 53 Domain Registration Developer Guide](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/registrar.html).
+   - Register a domain with Amazon Route 53, referring to the [Route 53 Domain Registration Developer Guide](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/registrar.html) for comprehensive guidance.
 
 4. **Local Environment Setup**:
-   - Generate a `.env` file within the `cdk` directory of your project. Define the domain name obtained from Route 53:
+   - Inside the `cdk` directory of your project, create a `.env` file and specify your Route 53 domain:
      ```
      DOMAIN_NAME="YourChosenRoute53Domain.com"
      ```
-     Substitute `YourChosenRoute53Domain.com` with your registered domain to confirm its active role in your deployment.
+     Replace `YourChosenRoute53Domain.com` with the domain you've registered, which will be integral to your deployment.
 
 5. **CodeCommit Repository Setup**:
-   - Create a CodeCommit repository named `awsChad` in the `us-east-1` region. Should you select a different repository name or region, adjust the pipeline stack's settings to align with these changes.
-   - Upload the contents of your cloned awsChad repository to this new CodeCommit repository.
+   - In the `us-east-1` region, establish a CodeCommit repository named `awsChad`. Should you opt for a different name or region, realign your pipeline stack's configurations accordingly.
+   - Link the CodeCommit repository as a remote to your local repository and push your awsChad project using the HTTPS Git credentials established earlier.
+--- 
 
-By following these steps, you're well on your way to deploying awsChad with the robust infrastructure it deserves.
+Following this structured approach will help ensure that all necessary configurations and security precautions are in place for deploying your awsChad project.
 
 ## Harnessing the CDK:
 
