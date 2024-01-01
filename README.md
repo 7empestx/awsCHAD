@@ -1,4 +1,3 @@
-
 # Table of Contents
 
 1. [Introduction](#awschad)
@@ -44,14 +43,14 @@ Looking to dominate the AWS landscape with the prowess of an "alpha"? Meet awsCh
 -   **npm**: Your trusty sidekick for managing packages.
 -   **aws-cli**
 
-## **[Getting Started](#getting-started)
+## **[Getting Started](#getting-started)**
 
 -   **Fork**: Begin by forking this repository into your own GitHub domain.
 -   **Clone**: Pull your forked repository into your local environment for development prowess.
 
 ---
 
-## **[awsChad Deployment Guide](#awschad-deployment-guide)
+## **[awsChad Deployment Guide](#awschad-deployment-guide)**
 
 This guide outlines the steps required for the seamless deployment of the awsChad project. Follow these prerequisites to prepare your environment:
 
