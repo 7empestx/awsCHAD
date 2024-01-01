@@ -1,12 +1,30 @@
+
+# Table of Contents
+
+1. [Introduction](#awschad)
+2. [Frontend](#frontend)
+3. [Backend](#backend)
+4. [Prerequisites](#prerequisites)
+5. [Getting Started](#getting-started)
+6. [awsChad Deployment Guide](#awschad-deployment-guide)
+   - [IAM User Configuration](#1-iam-user-configuration)
+   - [AWS CLI Installation](#2-aws-cli-installation)
+   - [Domain Registration](#3-domain-registration)
+   - [Local Environment Setup](#4-local-environment-setup)
+   - [CodeCommit Repository Setup](#5-codecommit-repository-setup)
+   - [Bootstrapping and Deployment](#6-bootstrapping-and-deployment)
+   - [Configure Build Environment](#7-configure-build-environment)
+   - [Update Pipeline Execution Role](#8-update-pipeline-execution-role)
+
 # **awsChad**
 
 Looking to dominate the AWS landscape with the prowess of an "alpha"? Meet awsChad — a powerhouse starter kit designed to flex the full potential of cloud infrastructure.
 
-## **Frontend**:
+## **[Frontend](#frontend)**
 
 **React with Webpack**: Eschew the pedestrian HTML templates and embrace the React framework, fused with the might of Webpack bundling. Deployed from the robust storage of AWS S3 and accelerated by the swift delivery of AWS Cloudfront, this setup is your gateway to unleashing the apex of frontend performance.
 
-## **Backend**:
+## **[Backend](#backend)**
 
 **TypeScript AWS Lambda**: Cast aside the common tongues of Python and JavaScript. The enlightened know that TypeScript's type safety and sleek syntax are the hallmarks of cloud function warriors in the AWS Lambda arena. With an API Gateway honed to a razor's edge, it beckons TypeScript Lambdas with the urgency of a Chad vying for the last gym bench on Monday.
 
@@ -20,20 +38,20 @@ Looking to dominate the AWS landscape with the prowess of an "alpha"? Meet awsCh
   <img src="images/awsChad.svg" alt="awsChad" width="600">
 </figure>
 
-## Prerequisites:
+## **[Prerequisites](#prerequisites)**
 
 -   **Git**: Version control that packs a punch.
 -   **npm**: Your trusty sidekick for managing packages.
 -   **aws-cli**
 
-## Getting Started:
+## **[Getting Started](#getting-started)
 
 -   **Fork**: Begin by forking this repository into your own GitHub domain.
 -   **Clone**: Pull your forked repository into your local environment for development prowess.
 
 ---
 
-## awsChad Deployment Guide:
+## **[awsChad Deployment Guide](#awschad-deployment-guide)
 
 This guide outlines the steps required for the seamless deployment of the awsChad project. Follow these prerequisites to prepare your environment:
 
