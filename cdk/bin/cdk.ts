@@ -1,5 +1,5 @@
-import * as cdk from "aws-cdk-lib";
-import { PipelineStack } from "../lib/Pipeline/PipelineStack";
+import * as cdk from 'aws-cdk-lib';
+import { PipelineStack } from '../lib/Pipeline/PipelineStack';
 
 const app = new cdk.App();
 
@@ -10,14 +10,14 @@ console.log(`Account ID: ${accountId}`);
 console.log(`Region: ${region}`);
 
 if (!accountId || !region) {
-  throw new Error("Account ID and Region must be specified in the context.");
+    throw new Error('Account ID and Region must be specified in the context.');
 }
 
-new PipelineStack(app, "PipelineStack", {
-  env: {
-    account: accountId,
-    region: region,
-  },
+new PipelineStack(app, 'PipelineStack', {
+    env: {
+        account: accountId,
+        region: region,
+    },
 });
 
 app.synth();
