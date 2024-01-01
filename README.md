@@ -14,6 +14,19 @@ Looking to dominate the AWS landscape with the prowess of an "alpha"? Meet awsCh
 ![awsChad](images/awsChadCICD.svg)
 ![awsChadArchitectureDiagram](images/awsChadArchitectureDiagram.png)
 
+<figure>
+  <img src="images/awsChadArchitectureDiagram.png" alt="awsChad Architecture Diagram" width="600">
+  <figcaption>Fig.1 - awsChad Architecture Diagram.</figcaption>
+</figure>
+<figure>
+  <img src="images/awsChadCICD.svg" alt="awsChad CICD Diagram" width="600">
+  <figcaption>Fig.2 - awsChad CICD Diagram.</figcaption>
+</figure>
+<figure>
+  <img src="images/awsChad.svg" alt="awsChad" width="600">
+  <figcaption>Fig.3 - awsChad</figcaption>
+</figure>
+
 ## Prerequisites:
 
 -   **Git**: Version control that packs a punch.
