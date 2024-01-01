@@ -10,21 +10,14 @@ Looking to dominate the AWS landscape with the prowess of an "alpha"? Meet awsCh
 
 **TypeScript AWS Lambda**: Cast aside the common tongues of Python and JavaScript. The enlightened know that TypeScript's type safety and sleek syntax are the hallmarks of cloud function warriors in the AWS Lambda arena. With an API Gateway honed to a razor's edge, it beckons TypeScript Lambdas with the urgency of a Chad vying for the last gym bench on Monday.
 
-![awsChad](images/awsChad.svg)
-![awsChad](images/awsChadCICD.svg)
-![awsChadArchitectureDiagram](images/awsChadArchitectureDiagram.png)
-
 <figure>
   <img src="images/awsChadArchitectureDiagram.png" alt="awsChad Architecture Diagram" width="600">
-  <figcaption>Fig.1 - awsChad Architecture Diagram.</figcaption>
 </figure>
 <figure>
   <img src="images/awsChadCICD.svg" alt="awsChad CICD Diagram" width="600">
-  <figcaption>Fig.2 - awsChad CICD Diagram.</figcaption>
 </figure>
 <figure>
   <img src="images/awsChad.svg" alt="awsChad" width="600">
-  <figcaption>Fig.3 - awsChad</figcaption>
 </figure>
 
 ## Prerequisites:
