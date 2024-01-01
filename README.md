@@ -131,6 +131,7 @@ This guide outlines the steps required for the seamless deployment of the awsCha
 
 6. **Bootstrapping and Deployment**:
 
+    - Run the following in the cdk directory:
     - Execute `cdk bootstrap` to prepare your AWS environment for the CDK deployment.
     - Run `cdk deploy --all` to deploy all stacks in your CDK application.
     - Upon initiating the deployment, check AWS CodePipeline for the status. The pipeline will initialize, but expect an initial failure due to the absence of the `DOMAIN_NAME` environment variable.
